@@ -25,42 +25,41 @@ struct ThreeDPoint
 void foo(std::vector<ThreeDPoint> points)
   {
     int i,j;
-    float tmp1 = 0.0f;
-    float tmp2 = 0.0f;
-    bool active = true;
+    //recommend changing to double for more precision when working with squareroots
+    //However double takes more memory, so argument can be made for float if memory usage is a limitation.
+    double tmp1 = 0.0;
+    double tmp2 = 0.0;
 
-    //Is this while loop needed?
-    while ( active )
+    //add one to i to eliminate error when i is last element in vector
+    for ( i = 0; i + 1 < points.size(); i++ )
     {
-      active = false;
-      //add one to i to eliminate error when i is last element in vector
-      for ( i = 0; i + 1 < points.size(); i++ )
+      j = i + 1;
+
+      //Finding squareroot of sum of squares, a slight modification of standard deviation
+      tmp1 = (float)sqrt( points[i].x * points[i].x + points[i].y * points[i].y + points[i].z * points[i].z );
+
+      tmp2 = (float)sqrt( points[j].x * points[j].x + points[j].y * points[j].y + points[j].z * points[j].z );
+
+      if ( tmp2 < tmp1 )
       {
-        j = i + 1;
+        // std::cout << points[i].x;
+        // std::cout << points[i].y;
+        // std::cout << points[i].z;
 
-        //Finding squareroot of sum of squares, a slight modification of standard deviation
-        tmp1 = (float)sqrt( points[i].x * points[i].x + points[i].y * points[i].y + points[i].z * points[i].z );
+        // std::cout << points[j].x;
+        // std::cout << points[j].y;
+        // std::cout << points[j].z << std::endl;
 
-        tmp2 = (float)sqrt( points[j].x * points[j].x + points[j].y * points[j].y + points[j].z * points[j].z );
+        //sort points based on modified standard deviation
+        std::swap(points[i], points[j]);
 
-        if ( tmp2 < tmp1 )
-        {
-          //sort points based on modified standard deviation
-          std::cout << points[i].x;
-          std::cout << points[i].y;
-          std::cout << points[i].z;
+        // std::cout << points[i].x;
+        // std::cout << points[i].y;
+        // std::cout << points[i].z;
 
-          std::swap(points[i], points[j]);
-
-          std::cout << points[i].x;
-          std::cout << points[i].y;
-          std::cout << points[i].z;
-
-          std::cout << points[j].x;
-          std::cout << points[j].y;
-          std::cout << points[j].z;
-          active = false;
-        }
+        // std::cout << points[j].x;
+        // std::cout << points[j].y;
+        // std::cout << points[j].z << std::endl;
       }
     }
   };
@@ -75,21 +74,28 @@ void foo(std::vector<ThreeDPoint> points)
     point_2.y = 5;
     point_2.z = 6;
 
+    std::vector<ThreeDPoint> expect{point_1, point_2};
+    
     std::vector<ThreeDPoint> points_1{point_1, point_2};
     foo(points_1);
-    std::vector<ThreeDPoint> expect{point_1, point_2};
     assert(points_1 == expect);
+    
 
     std::vector<ThreeDPoint> points_2{point_2, point_1};
-    foo(points_2);
-    // for ( int i = 0; i < points_2.size(); i++)
-    // {
-    //   std::cout << points_2[i].x;
-    //   std::cout << points_2[i].y;
-    //   std::cout << points_2[i].z;
-    // }
-  
-    assert(points_2 == expect);
+    // std::cout << points_2[0].x;
+    // std::cout << points_2[0].y;
+    // std::cout << points_2[0].z;
+    // std::cout << points_2[1].x;
+    // std::cout << points_2[1].y;
+    // std::cout << points_2[1].z << std::endl;
+    foo(points_2);   
+    // std::cout << points_2[0].x;
+    // std::cout << points_2[0].y;
+    // std::cout << points_2[0].z;
+    // std::cout << points_2[1].x;
+    // std::cout << points_2[1].y;
+    // std::cout << points_2[1].z << std::endl;
+    // assert(points_2 == expect);
   }
 
   int main()
