@@ -1,7 +1,3 @@
-//Runtime polymorphism gives us the ability to use OOP of inheritance. This means that instead of the program choosing which function to call at compile time, the program chooses the function dynamically based on rules of inheritance. 
-//The most clear example of this is when there is a Parent Class( or base class) with children. The child will inherit all the functionality of the parent class, plus have it's own functionality if desired. Runtime polymorphism occurs when both the parent and the child class have a function with the same name. In this case function overriding occurs and the child's function will be called over the parents.
-//The code example I'm providing comes from a webscraping project I'm currently working on in my internship. There are many sites that need to be scraped, meaning that we will have a large number of spiders (crawl through the html response) that will need both customized functionality as well as global functionality. The best thing to do to solve this dilemma is to create a parent spider class, that the child spiders can then inherit from. 
-
 #include <iostream>
 #include <map>
 #include <string>
